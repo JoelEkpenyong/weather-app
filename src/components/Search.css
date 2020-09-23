@@ -1,0 +1,24 @@
+.search_bar {
+  width: 90%;
+  height: 10vh;
+  margin-top: 5vh;
+  text-align: center;
+}
+
+.search_bar input {
+  padding: 1rem;
+  width: min(100%, 500px);
+  border-radius: 1rem;
+  border: 1px solid #aaaaaa;
+  outline: none;
+  color: #575757;
+  font-size: 1.5rem;
+}
+
+@media screen and (min-width: 700px) {
+  .search_bar input {
+    padding: 1.3rem;
+    line-height: 1.3rem;
+    font-size: 2rem;
+  }
+}
