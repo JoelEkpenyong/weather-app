@@ -1,41 +1,46 @@
 import React from "react";
 import "./Weather.css";
 
-const WeatherIcon = {
-  Rain: (
-    <span
-      className="iconify"
-      data-icon="carbon:rain-heavy"
-      data-inline="false"
-    ></span>
-  ),
-  Clear: (
-    <span className="iconify" data-icon="uil:clouds" data-inline="false"></span>
-  ),
-  Cloudy: (
-    <span
-      className="iconify"
-      data-icon="carbon:mostly-cloudy"
-      data-inline="false"
-    ></span>
-  ),
-  Sunny: (
-    <span
-      className="iconify"
-      data-icon="carbon:sunny"
-      data-inline="false"
-    ></span>
-  ),
+
+
+
+
+const windDirection = (deg) => {
+  if (deg < 90) {
+    return "NE";
+  } else if (deg > 90 && deg < 180) {
+    return "SE";
+  } else if (deg > 180 && deg < 270) {
+    return "SW";
+  } else return "NW";
 };
 
-const Weather = () => {
+
+
+const Weather = ({
+  city,
+  description,
+  country,
+  temp,
+  temp_min,
+  temp_max,
+  speed,
+  deg,
+  // main
+  weatherIcon
+}) => {
+
   return (
     <div className="wrapper">
       <div className="weather_info">
-        <h2 className="city_name">Cupertino</h2>
-        <h4 className="weather_overview">LIGHT RAIN</h4>
+        <h2 className="city_name">
+          {city}, <span>{country}</span>
+        </h2>
+        <h4 className="weather_overview">{description}</h4>
       </div>
-      <div className="weather_icon">{WeatherIcon.Rain}</div>
+      <div className="weather_icon">
+        <img src={weatherIcon} alt="weather icon" />
+      </div>
       <div className="weather_details">
         <div className="temperature">
           <span
@@ -44,9 +49,9 @@ const Weather = () => {
             data-inline="false"
           ></span>
           <p>
-            <span className="min">10&#176; /</span>
-            <span className="avg">12&#176;</span>
-            <span className="max">/ 14&#176;</span>
+            <span className="min">{temp_min}&#176; /</span>
+            <span className="avg">{temp}&#176;</span>
+            <span className="max">/ {temp_max}&#176;</span>
           </p>
         </div>
         <div className="wind">
@@ -55,8 +60,8 @@ const Weather = () => {
             data-icon="bx:bx-wind"
             data-inline="false"
           ></span>
-          <p>4 mph, </p>
-          <p>SE direction</p>
+          <p>{speed} mph, </p>
+          <p>{windDirection(deg)} direction</p>
         </div>
       </div>
     </div>
