@@ -14,6 +14,7 @@ const WeatherApp = () => {
   const [speed, setSpeed] = useState(0);
   const [deg, setDeg] = useState(0);
   const [weatherIcon, setIcon] = useState('')
+
   return (
     <section>
       <Search
