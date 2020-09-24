@@ -15,10 +15,26 @@
   font-size: 1.5rem;
 }
 
+.voice_btn{
+  border: none;
+  background-color: inherit;
+  outline: none;
+  font-size: 5rem;
+
+  position: fixed;
+  bottom: 5rem;
+  right: 1rem;
+}
+
+
 @media screen and (min-width: 700px) {
   .search_bar input {
     padding: 1.3rem;
     line-height: 1.3rem;
     font-size: 2rem;
+  }
+
+  .voice_btn{
+    right: 5rem; 
   }
 }

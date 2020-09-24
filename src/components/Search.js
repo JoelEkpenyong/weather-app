@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import "./Search.css";
 
 
-
+// image urls for weather icons
 const weatherIcon = {
   clear: 'clear.png',
   clouds: 'cloudy.png',
@@ -11,11 +11,55 @@ const weatherIcon = {
   mist: 'mist.png',
   fog: 'fog.png',
   drizzle: 'drizzle.png',
-  snow: 'snow.png'
+  snow: 'snow.png',
+  thunderstorm: 'storm.png'
 };
 
+// call api by voice input
+function Voice({ setSearch, setQuery, getWeather, description, city }) {
+
+  const guideMessae = 'what city would you like to know the weather'
+
+  const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
+  const recognition = new SpeechRecognition();
+
+  const speechGuide = (message) => {
+    const speech = new SpeechSynthesisUtterance()
+    speech.text = message
+    speech.volume = .7
+    speech.rate = 1
+    speech.pitch = 1
+
+    window.speechSynthesis.speak(speech)
+  }
+
+  recognition.onstart = () => {
+    console.log('voice activated, you can use microphone')
+    speechGuide(guideMessae)
+  }
+
+  recognition.onresult = (e) => {
+    const transcript = e.results[0][0].transcript
+
+    // setting states and init the getweather function using the transcript as query
+    setQuery(transcript)
+    getWeather(transcript)
+    setSearch('')
+
+  }
+
+  return (
+    <button className="voice_btn" type="button" onClick={() => {
+      recognition.start()
+    }}>
+      <span className="iconify" data-icon="ion:mic-circle-outline" data-inline="false" style={{ color: '#333' }}></span>
+    </button>
+  )
+}
 
 const Search = ({
+  city,
+  description,
   setCity,
   setDescription,
   setMain,
@@ -77,7 +121,7 @@ const Search = ({
     setSearch('')
   };
 
-  // accessing users location 
+  // accessing users location using geolocation and setting its longitude and latitiude as queries to the api 
   const success = (position) => {
     console.log(position)
     let { latitude, longitude } = position.coords
@@ -95,16 +139,19 @@ const Search = ({
   useEffect(geolocation, [])
 
   return (
-    <form className="search_bar" onSubmit={(e) => updateQuery(e)}>
-      <input
-        type="text"
-        placeholder="Input City"
-        value={search}
-        name="city"
-        autoComplete="off"
-        onChange={(e) => updateSearch(e)}
-      />
-    </form>
+    <>
+      <form className="search_bar" onSubmit={(e) => updateQuery(e)}>
+        <input
+          type="text"
+          placeholder="City..."
+          value={search}
+          name="city"
+          autoComplete="off"
+          onChange={(e) => updateSearch(e)}
+        />
+      </form>
+      <Voice setQuery={setQuery} setSearch={setSearch} getWeather={getWeather} description={description} city={city} />
+    </>
   );
 };
 

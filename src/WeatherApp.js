@@ -18,6 +18,8 @@ const WeatherApp = () => {
   return (
     <section>
       <Search
+        city={city}
+        description={description}
         setCity={setCity}
         setDescription={setDescription}
         setMain={setMain}
