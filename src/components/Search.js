@@ -65,6 +65,7 @@ const Search = ({
   const updateQuery = (e) => {
     e.preventDefault();
     setQuery(search);
+    setSearch('')
   };
 
   return (
