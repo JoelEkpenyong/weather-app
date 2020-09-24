@@ -55,7 +55,7 @@ function Voice({ setSearch, setQuery, getWeather }) {
       speechGuide(guideMessae)
       setTimeout(() => {
         recognition.start()
-      }, 3000)
+      }, 2900)
     }}>
       <span className="iconify" data-icon="ion:mic-circle-outline" data-inline="false" style={{ color: '#333' }}></span>
     </button>
