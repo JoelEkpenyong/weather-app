@@ -24,7 +24,7 @@ const Search = ({
   setIcon
 }) => {
   const BASE_URL = "https://api.openweathermap.org/data/2.5/weather/?";
-  const APP_ID = process.env.REACT_APP_API_KEY
+  const APP_ID = '70e19ba461fd1eb09a6eea1bbf30338f'
 
   const [search, setSearch] = useState("");
   const [query, setQuery] = useState("london");
