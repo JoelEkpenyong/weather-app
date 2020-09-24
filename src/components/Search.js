@@ -35,7 +35,7 @@ function Voice({ setSearch, setQuery, getWeather }) {
 
   recognition.onstart = () => {
     console.log('voice activated, you can use microphone')
-    speechGuide(guideMessae)
+    // speechGuide(guideMessae)
   }
 
   recognition.onresult = (e) => {
@@ -51,7 +51,11 @@ function Voice({ setSearch, setQuery, getWeather }) {
 
   return (
     <button className="voice_btn" type="button" onClick={() => {
-      recognition.start()
+      // recognition.start()
+      speechGuide(guideMessae)
+      setTimeout(() => {
+        recognition.start()
+      }, 3000)
     }}>
       <span className="iconify" data-icon="ion:mic-circle-outline" data-inline="false" style={{ color: '#333' }}></span>
     </button>
