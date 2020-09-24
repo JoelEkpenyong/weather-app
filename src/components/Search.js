@@ -18,44 +18,64 @@ const weatherIcon = {
 // call api by voice input
 function Voice({ setSearch, setQuery, getWeather }) {
 
-  const guideMessae = 'what city would you like to know the weather'
-
-  const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
-  const recognition = new SpeechRecognition();
-
-  const speechGuide = (message) => {
-    const speech = new SpeechSynthesisUtterance()
-    speech.text = message
-    speech.volume = .7
-    speech.rate = 1
-    speech.pitch = 1
-
-    window.speechSynthesis.speak(speech)
-  }
-
-  recognition.onstart = () => {
-    console.log('voice activated, you can use microphone')
-    // speechGuide(guideMessae)
-  }
-
-  recognition.onresult = (e) => {
-    const transcript = e.results[0][0].transcript
-
-    console.log(transcript)
-    // setting states and init the getweather function using the transcript as query
-    setQuery(transcript)
-    getWeather(transcript)
-    setSearch('')
-
-  }
-
   return (
     <button className="voice_btn" type="button" onClick={() => {
-      // recognition.start()
-      speechGuide(guideMessae)
-      setTimeout(() => {
-        recognition.start()
-      }, 2900)
+      if ('SpeechRecognition' in window || 'webkitSpeechRecognition' in window) {
+        // speech recognition API supported
+        console.log('speech recognition supported')
+
+        const guideMessage = 'what city would you like to know the weather'
+        const speechGuide = (message) => {
+          const speech = new SpeechSynthesisUtterance()
+          speech.text = message
+          speech.volume = .7
+          speech.rate = 1
+          speech.pitch = 1
+
+          window.speechSynthesis.speak(speech)
+        }
+
+        const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
+        const recognition = new SpeechRecognition();
+
+
+        recognition.onstart = () => {
+          console.log('voice activated, you can use microphone')
+          // speechGuide(guideMessae)
+        }
+
+        recognition.onresult = (e) => {
+          const transcript = e.results[0][0].transcript
+
+          console.log(transcript)
+          // setting states and init the getweather function using the transcript as query
+          setQuery(transcript)
+          getWeather(transcript)
+          setSearch('')
+        }
+
+        speechGuide(guideMessage)
+        setTimeout(() => {
+          recognition.start()
+        }, 2900)
+
+      } else {
+        // speech recognition API not supported
+        console.log('speec recognition not supported')
+
+        const guideMessage = 'speech recognition not supported by browser'
+        const speechGuide = (message) => {
+          const speech = new SpeechSynthesisUtterance()
+          speech.text = message
+          speech.volume = .7
+          speech.rate = 1
+          speech.pitch = 1
+
+          window.speechSynthesis.speak(speech)
+        }
+
+        speechGuide(guideMessage)
+      }
     }}>
       <span className="iconify" data-icon="ion:mic-circle-outline" data-inline="false" style={{ color: '#333' }}></span>
     </button>
