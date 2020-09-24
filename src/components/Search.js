@@ -7,7 +7,8 @@ const weatherIcon = {
   clear: 'clear.png',
   clouds: 'cloudy.png',
   rain: 'rain.png',
-  sunny: 'sunny.png'
+  sunny: 'sunny.png',
+  mist: 'mist.png'
 };
 
 
@@ -26,14 +27,29 @@ const Search = ({
   const BASE_URL = "https://api.openweathermap.org/data/2.5/weather/?";
   const APP_ID = '70e19ba461fd1eb09a6eea1bbf30338f'
 
+
   const [search, setSearch] = useState("");
   const [query, setQuery] = useState("london");
 
-  const getWeather = async () => {
-    const res = await fetch(
-      `${BASE_URL}q=${query}&appid=${APP_ID}&units=metric`
-    );
+  // const [lat, setLat] = useState(0)
+  // const [long, setLong] = useState(0)
+
+  // const URL_cityName = `${BASE_URL}q=${query}&appid=${APP_ID}&units=metric`
+
+  // const URL_LatLong = `${BASE_URL}lat${lat}&lon=${long}&appid=${APP_ID}&units=metric`
+
+  async function getWeather(cityName, lat, long) {
+    let api_query = ``
+    if (arguments.length === 1) {
+      api_query = `${BASE_URL}q=${cityName}&appid=${APP_ID}&units=metric`
+    } else {
+      api_query = `${BASE_URL}lat=${lat}&lon=${long}&appid=${APP_ID}&units=metric`
+    }
+    const res = await fetch(api_query);
     const weatherData = await res.json();
+
+    // console.log(weatherData)
+
     const city = weatherData.name;
     const country = weatherData.sys.country;
     const { description, main } = weatherData.weather[0];
@@ -54,7 +70,7 @@ const Search = ({
   };
 
   useEffect(() => {
-    getWeather();
+    getWeather(query);
     // eslint-disable-next-line
   }, [query]);
 
@@ -67,6 +83,28 @@ const Search = ({
     setQuery(search);
     setSearch('')
   };
+
+  // accessing users location 
+  const success = (position) => {
+    console.log(position)
+    let { latitude, longitude } = position.coords
+    latitude = Math.floor(latitude)
+    longitude = Math.floor(longitude)
+
+    // console.log(`lat = ${latitude}, long = ${longitude}`)
+
+    // setLat(latitude)
+    // setLong(longitude)
+
+    getWeather(null, latitude, longitude)
+
+  }
+
+  const geolocation = () => {
+    navigator.geolocation.watchPosition(success)
+  }
+
+  useEffect(geolocation, [])
 
   return (
     <form className="search_bar" onSubmit={(e) => updateQuery(e)}>
