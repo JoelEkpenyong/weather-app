@@ -30,18 +30,20 @@ const WeatherApp = () => {
         setIcon={setIcon}
       />
       <div className="container">
-        <Weather
-          city={city}
-          description={description.toUpperCase()}
-          main={main.toLowerCase()}
-          country={country}
-          temp={Math.floor(temp)}
-          temp_min={Math.floor(temp_min)}
-          temp_max={Math.floor(temp_max)}
-          speed={Math.floor(speed * 2.237)}
-          deg={deg}
-          weatherIcon={weatherIcon}
-        />
+        {
+          weatherIcon !== '' && main !== '' ?
+            <Weather
+              city={city}
+              description={description.toUpperCase()}
+              main={main.toLowerCase()}
+              country={country}
+              temp={Math.floor(temp)}
+              temp_min={Math.floor(temp_min)}
+              temp_max={Math.floor(temp_max)}
+              speed={Math.floor(speed * 2.237)}
+              deg={deg}
+              weatherIcon={weatherIcon}
+            /> : <h1>loading...</h1>}
       </div>
     </section>
   );

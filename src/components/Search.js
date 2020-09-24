@@ -8,7 +8,8 @@ const weatherIcon = {
   clouds: 'cloudy.png',
   rain: 'rain.png',
   sunny: 'sunny.png',
-  mist: 'mist.png'
+  mist: 'mist.png',
+  fog: 'fog.png'
 };
 
 
@@ -27,16 +28,8 @@ const Search = ({
   const BASE_URL = "https://api.openweathermap.org/data/2.5/weather/?";
   const APP_ID = '70e19ba461fd1eb09a6eea1bbf30338f'
 
-
   const [search, setSearch] = useState("");
   const [query, setQuery] = useState("london");
-
-  // const [lat, setLat] = useState(0)
-  // const [long, setLong] = useState(0)
-
-  // const URL_cityName = `${BASE_URL}q=${query}&appid=${APP_ID}&units=metric`
-
-  // const URL_LatLong = `${BASE_URL}lat${lat}&lon=${long}&appid=${APP_ID}&units=metric`
 
   async function getWeather(cityName, lat, long) {
     let api_query = ``
@@ -48,7 +41,7 @@ const Search = ({
     const res = await fetch(api_query);
     const weatherData = await res.json();
 
-    // console.log(weatherData)
+
 
     const city = weatherData.name;
     const country = weatherData.sys.country;
@@ -86,18 +79,8 @@ const Search = ({
 
   // accessing users location 
   const success = (position) => {
-    // console.log(position)
     let { latitude, longitude } = position.coords
-    // latitude = Math.floor(latitude)
-    // longitude = Math.floor(longitude)
-
-    // console.log(`lat = ${latitude}, long = ${longitude}`)
-
-    // setLat(latitude)
-    // setLong(longitude)
-
     getWeather(null, latitude, longitude)
-
   }
 
   const geolocation = () => {
