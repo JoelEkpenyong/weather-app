@@ -41,6 +41,7 @@ function Voice({ setSearch, setQuery, getWeather }) {
   recognition.onresult = (e) => {
     const transcript = e.results[0][0].transcript
 
+    console.log(transcript)
     // setting states and init the getweather function using the transcript as query
     setQuery(transcript)
     getWeather(transcript)
