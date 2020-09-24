@@ -9,7 +9,9 @@ const weatherIcon = {
   rain: 'rain.png',
   sunny: 'sunny.png',
   mist: 'mist.png',
-  fog: 'fog.png'
+  fog: 'fog.png',
+  drizzle: 'drizzle.png',
+  snow: 'snow.png'
 };
 
 
@@ -40,8 +42,6 @@ const Search = ({
     }
     const res = await fetch(api_query);
     const weatherData = await res.json();
-
-
 
     const city = weatherData.name;
     const country = weatherData.sys.country;
@@ -79,12 +79,17 @@ const Search = ({
 
   // accessing users location 
   const success = (position) => {
+    console.log(position)
     let { latitude, longitude } = position.coords
     getWeather(null, latitude, longitude)
   }
 
+  const error = () => {
+    alert('Failed to get Geolocation')
+  }
+
   const geolocation = () => {
-    navigator.geolocation.watchPosition(success)
+    navigator.geolocation.getCurrentPosition(success, error)
   }
 
   useEffect(geolocation, [])
