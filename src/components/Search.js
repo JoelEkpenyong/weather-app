@@ -16,7 +16,7 @@ const weatherIcon = {
 };
 
 // call api by voice input
-function Voice({ setSearch, setQuery, getWeather, description, city }) {
+function Voice({ setSearch, setQuery, getWeather }) {
 
   const guideMessae = 'what city would you like to know the weather'
 
@@ -58,8 +58,6 @@ function Voice({ setSearch, setQuery, getWeather, description, city }) {
 }
 
 const Search = ({
-  city,
-  description,
   setCity,
   setDescription,
   setMain,
@@ -150,7 +148,7 @@ const Search = ({
           onChange={(e) => updateSearch(e)}
         />
       </form>
-      <Voice setQuery={setQuery} setSearch={setSearch} getWeather={getWeather} description={description} city={city} />
+      <Voice setQuery={setQuery} setSearch={setSearch} getWeather={getWeather} />
     </>
   );
 };
