@@ -86,10 +86,10 @@ const Search = ({
 
   // accessing users location 
   const success = (position) => {
-    console.log(position)
+    // console.log(position)
     let { latitude, longitude } = position.coords
-    latitude = Math.floor(latitude)
-    longitude = Math.floor(longitude)
+    // latitude = Math.floor(latitude)
+    // longitude = Math.floor(longitude)
 
     // console.log(`lat = ${latitude}, long = ${longitude}`)
 
