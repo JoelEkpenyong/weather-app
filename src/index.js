@@ -1,6 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import WeatherApp from './WeatherApp';
+import * as serviceWorker from './serviceWorker';
 import './index.css';
 
 ReactDOM.render(
@@ -9,3 +10,5 @@ ReactDOM.render(
 	</React.StrictMode>,
 	document.getElementById('root')
 );
+
+serviceWorker.unregister();
